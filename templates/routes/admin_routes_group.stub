@@ -1,0 +1,10 @@
+/*
+|--------------------------------------------------------------------------
+| Admin routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ()
+{
+        require Config::get('generator.path_admin_routes');
+});
