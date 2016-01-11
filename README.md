@@ -37,12 +37,12 @@ example:
 
 
 with tables and relationship with 
-crud: users
-	table: users -> fields file
-	table: profiles -> fields file
-	table: orders -> fields file
-	table: purchases -> fields file
-	table: addresses -> fields file
+  * crud: users
+	  * table: users -> fields file
+	  * table: profiles -> fields file
+	  * table: orders -> fields file
+	  * table: purchases -> fields file
+	  * table: addresses -> fields file
 
 
 
