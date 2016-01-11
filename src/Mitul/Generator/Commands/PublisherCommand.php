@@ -325,11 +325,16 @@ class PublisherCommand extends Command
     {
         $apiVersion = Config::get('generator.api_version');
         $apiPrefix = Config::get('generator.api_prefix');
+           	$adminPrefix = Config::get('generator.admin_prefix');  // newly added
+        	$adminNamespace = Config::get('generator.namespace_admin_controller');  // newly added
         $apiNamespace = Config::get('generator.namespace_api_controller');
 
         $templateData = str_replace('$API_VERSION$', $apiVersion, $templateData);
         $templateData = str_replace('$NAMESPACE_API_CONTROLLER$', $apiNamespace, $templateData);
         $templateData = str_replace('$API_PREFIX$', $apiPrefix, $templateData);
+
+        $templateData = str_replace('$ADMIN_PREFIX$', $adminPrefix, $templateData); // newly added
+        $templateData = str_replace('$NAMESPACE_ADMIN_CONTROLLER$', $adminNamespace, $templateData); // newly added
 
         return $templateData;
     }
