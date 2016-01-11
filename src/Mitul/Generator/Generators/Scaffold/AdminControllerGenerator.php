@@ -18,7 +18,7 @@
         public function __construct($commandData)
         {
             $this->commandData = $commandData;
-            $this->path = Config::get('generator.path_admin_controller', app_path('Http/Controllers/Admin'));
+            $this->path = Config::get('generator.path_admin_controller', app_path('Http/Controllers/Admin/'));
         }
 
         public function generate()
