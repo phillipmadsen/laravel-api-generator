@@ -16,14 +16,15 @@ class APIGeneratorCommand extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'mitul.generator:api';
+//    protected $name = 'mitul.generator:api'; renamed to keep seperate
+    protected $name = 'phillips:create-api';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a full CRUD API for given model';
+    protected $description = 'Create a full API for given model';
 
     /**
      * Create a new command instance.
