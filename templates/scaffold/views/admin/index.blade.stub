@@ -1,0 +1,73 @@
+@extends('admin.layouts.admin')
+@section('title')
+$MODEL_NAME_PLURAL$ Accounts
+@endsection
+@section('per-page-stylesheets')
+        <link rel="stylesheet" type="text/css" href="{!! asset('/admin/assets/plugins/select2/select2.css') !!}" />
+        <link rel="stylesheet" href="{!! asset('/admin/assets/plugins/DataTables/media/css/DT_bootstrap.css') !!}" />
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+
+@endsection
+@section('header-page-script')
+@endsection
+{{-- start: PAGE HEADER --}}
+@section('parent-breadcrumb')
+Dashboard
+@endsection
+@section('active-breadcrumb')
+$MODEL_NAME_PLURAL$ > $MODEL_NAME$
+@endsection
+@section('header-title')
+@endsection
+@section('header-title-small')
+@endsection
+{{-- end: PAGE HEADER --}}
+@section('content')
+<!-- start: PAGE CONTENT -->
+<div class="row">
+	<div class="col-sm-12">
+		@include('flash::message')
+		{{-- start: FORM WIZARD PANEL --}}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-external-link-square"></i>
+				$MODEL_NAME_PLURAL$
+				<div class="panel-tools">
+					<a class="btn btn-xs btn-primary "  href="{!! route('admin.users.create') !!}">Add New</a>
+					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"> </a>
+					<a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal"> <i class="fa fa-wrench"></i> </a>
+					<a class="btn btn-xs btn-link panel-refresh" href="#"> <i class="fa fa-refresh"></i> </a>
+					<a class="btn btn-xs btn-link panel-expand" href="#"> <i class="fa fa-resize-full"></i> </a>
+					<a class="btn btn-xs btn-link panel-close" href="#"> <i class="fa fa-times"></i> </a>
+				</div>
+			</div>
+			<div class="panel-body">
+				@include('flash::message')
+				@if($$MODEL_NAME_PLURAL_CAMEL$->isEmpty())
+				<div class="well text-center">No $MODEL_NAME_PLURAL$ found.</div>
+				@else
+				@include('admin.$MODEL_NAME_PLURAL_CAMEL$.table')
+				@endif
+			</div>
+		{{-- 	$PAGINATE$ --}}
+		</div>
+	</div>
+</div>
+@endsection
+
+@section('admin-modal-config')@endsection
+
+ @section('per-page-javascripts')
+		<script type="text/javascript" src="{!! asset('/admin/assets/plugins/select2/select2.min.js') !!}"></script>
+		<script type="text/javascript" src="{!! asset('/admin/assets/plugins/DataTables/media/js/jquery.dataTables.min.js') !!}"></script>
+		<script type="text/javascript" src="{!! asset('/admin/assets/plugins/DataTables/media/js/DT_bootstrap.js') !!}"></script>
+		<script src="{!! asset('/admin/assets/js/table-data.js') !!}"></script>
+@endsection
+
+@section('footer-page-script')@endsection
+
+@section('custom-in-script')
+		Main.init();
+		TableData.init();
+@endsection
