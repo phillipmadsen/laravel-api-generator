@@ -19,7 +19,10 @@ class ScaffoldAPIGeneratorCommand extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'mitul.generator:scaffold_api';
+//        protected $name = 'mitul.generator:scaffold_api';  //renamed to keep separete
+
+        protected $name = 'phillips:create-crud';
+        
     /**
      * The console command description.
      *
@@ -42,39 +45,86 @@ class ScaffoldAPIGeneratorCommand extends BaseCommand
      * @return void
      */
     public function handle()
-    {
-        parent::handle();
+           public function handle()
+        {
+            parent::handle();
+            if (!$this->commandData->skipMigration) {
+                $migrationGenerator = new MigrationGenerator($this->commandData);
+                $migrationGenerator->generate();
+            }
+            $modelGenerator = new ModelGenerator($this->commandData);
+            $modelGenerator->generate();
 
-        if (!$this->commandData->skipMigration) {
-            $migrationGenerator = new MigrationGenerator($this->commandData);
-            $migrationGenerator->generate();
+            \Storage::prepend('laravel.log', 'Model Generated');
+
+            /**
+             * new Admin output
+             * @var string
+             * @author  phillip madsen
+             */            
+            $AdminModelGenerator = new AdminModelGenerator($this->commandData);
+            $AdminModelGenerator->generate();
+            \Storage::prepend('laravel.log', 'Admin Model Generated');
+
+            $requestGenerator = new RequestGenerator($this->commandData);
+            $requestGenerator->generate();
+            /**
+             * new Admin Request output
+             * @var string
+             * @author  phillip madsen
+             */
+            $adminRequestGenerator = new AdminRequestGenerator($this->commandData);
+            $adminRequestGenerator->generate();
+            \Storage::prepend('laravel.log', 'Admin Requests Generated');
+
+            $repositoryGenerator = new RepositoryGenerator($this->commandData);
+            $repositoryGenerator->generate();
+            /**
+             * new Admin Repository output
+             * @var string
+             * @author  phillip madsen
+             */
+            $adminRepositoryGenerator = new AdminRepositoryGenerator($this->commandData);
+            $adminRepositoryGenerator->generate();
+            \Storage::prepend('laravel.log', 'Admin Repos Generated');
+            /**
+             * new Admin Views output
+             * @var string
+             * @author  phillip madsen
+             */
+            $adminViewsGenerator = new AdminViewGenerator($this->commandData);
+            $adminViewsGenerator->generate();
+            \Storage::prepend('laravel.log', 'Admin Views Generated');
+            /**
+             * new live / frontend Views output
+             * @var string
+             * @author  phillip madsen
+             */
+            $liveViewsGenerator = new LiveViewGenerator($this->commandData);
+            $liveViewsGenerator->generate();
+            \Storage::prepend('laravel.log', 'live / frontend Views Generated');
+            /**
+             * new Admin controller output
+             * @var string
+             * @author  phillip madsen
+             */
+            $repoAdminControllerGenerator = new AdminControllerGenerator($this->commandData);
+            $repoAdminControllerGenerator->generate();
+            \Storage::prepend('laravel.log', 'Admin controller Generated');
+
+            $repoControllerGenerator = new ViewControllerGenerator($this->commandData);
+            $repoControllerGenerator->generate();
+
+            $repoControllerGenerator = new APIControllerGenerator($this->commandData);
+            $repoControllerGenerator->generate();
+
+            $routeGenerator = new RoutesGenerator($this->commandData);
+            $routeGenerator->generate();
+
+            if ($this->confirm("\nDo you want to migrate database? [y|N]", false)) {
+                $this->call('migrate');
+            }
         }
-
-        $modelGenerator = new ModelGenerator($this->commandData);
-        $modelGenerator->generate();
-
-        $requestGenerator = new RequestGenerator($this->commandData);
-        $requestGenerator->generate();
-
-        $repositoryGenerator = new RepositoryGenerator($this->commandData);
-        $repositoryGenerator->generate();
-
-        $repoControllerGenerator = new APIControllerGenerator($this->commandData);
-        $repoControllerGenerator->generate();
-
-        $viewsGenerator = new ViewGenerator($this->commandData);
-        $viewsGenerator->generate();
-
-        $repoControllerGenerator = new ViewControllerGenerator($this->commandData);
-        $repoControllerGenerator->generate();
-
-        $routeGenerator = new RoutesGenerator($this->commandData);
-        $routeGenerator->generate();
-
-        if ($this->confirm("\nDo you want to migrate database? [y|N]", false)) {
-            $this->call('migrate');
-        }
-    }
 
     /**
      * Get the console command arguments.
