@@ -1,0 +1,62 @@
+@extends('admin.layouts.admin')
+@section('title')
+	Create New $MODEL_NAME_PLURAL$
+@endsection
+
+@section('per-page-stylesheets')@endsection
+
+@section('header-page-script')@endsection
+
+@section('parent-breadcrumb')@endsection
+
+@section('active-breadcrumb')
+	$MODEL_NAME_PLURAL$
+@endsection
+
+@section('header-title')
+	Create New $MODEL_NAME$
+@endsection
+
+@section('header-title-small')@endsection
+
+@section('content')
+
+{{-- start: PAGE CONTENT --}}
+<div class="row">
+	<div class="col-sm-12">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-external-link-square"></i>
+				New $MODEL_NAME$
+				<div class="panel-tools">
+					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"> </a>
+					<a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal"> <i class="fa fa-wrench"></i> </a>
+					<a class="btn btn-xs btn-link panel-refresh" href="#"> <i class="fa fa-refresh"></i> </a>
+					<a class="btn btn-xs btn-link panel-expand" href="#"> <i class="fa fa-resize-full"></i> </a>
+					<a class="btn btn-xs btn-link panel-close" href="#"> <i class="fa fa-times"></i> </a>
+				</div>
+			</div>
+			<div class="panel-body">
+
+
+			@include('common.errors')
+			{!! Form::open(['route' => 'admin.$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
+				@include('admin.$MODEL_NAME_PLURAL_CAMEL$.fields')
+			{!! Form::close() !!}
+
+
+			</div>
+		</div>
+
+	</div>
+</div>
+{{-- end: PAGE CONTENT --}}
+@endsection
+
+@section('admin-modal-config')@endsection
+@section('per-page-javascripts')@endsection
+@section('footer-page-script')@endsection
+@section('custom-in-script')
+Main.init();
+@endsection
