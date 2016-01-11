@@ -27,6 +27,25 @@ Admin = DashboardController.php
   * views/{model}/live.blade.php
   * views/{model}/index.blade.php
   * views/{model}/show.blade.php
+  * 
+  COMMING SOON
+auto generated factory for Faker
+auto generated menu for Caffeinated\Menus
+auto generation of migration files for the fields file
+multi table crud/models 
+example: 
+
+
+with tables and relationship with 
+crud: users
+	table: users -> fields file
+	table: profiles -> fields file
+	table: orders -> fields file
+	table: purchases -> fields file
+	table: addresses -> fields file
+
+
+
 
 (This is a work in progress based off the awesome Mitulgolakiya/laravel-api-generator)
 
