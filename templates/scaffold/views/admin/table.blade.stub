@@ -1,0 +1,47 @@
+ <!-- start: PAGE CONTENT -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            Please try to re-size your browser window in order to see the tables in responsive mode.
+        </div>
+        <!-- start: RESPONSIVE TABLE PANEL -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+              {!! $$MODEL_NAME_PLURAL_CAMEL$ !!}
+                <div class="panel-tools">
+                    <a class="btn btn-xs btn-link panel-collapse collapses" href="#"> </a>
+                    <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal"> <i class="fa fa-wrench"></i> </a>
+                    <a class="btn btn-xs btn-link panel-refresh" href="#"> <i class="fa fa-refresh"></i> </a>
+                    <a class="btn btn-xs btn-link panel-expand" href="#"> <i class="fa fa-resize-full"></i> </a>
+                    <a class="btn btn-xs btn-link panel-close" href="#"> <i class="fa fa-times"></i> </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover table-full-width">
+                        <thead>
+                        <th>View</th>
+                        $FIELD_HEADERS$
+                        <th width="50px">Action</th>
+                        </thead>
+                        <tbody>
+                        @foreach($$MODEL_NAME_PLURAL_CAMEL$ as $$MODEL_NAME_CAMEL$)
+                            <tr>
+                            <td><a href="{!! route('admin.$MODEL_NAME_PLURAL_CAMEL$.edit', [$$MODEL_NAME_CAMEL$->id]) !!}"><i class="fa fa-eye fa-lg" ></i> </a></td>
+                                $FIELD_BODY$
+                                <td>
+                                    <a href="{!! route('admin.$MODEL_NAME_PLURAL_CAMEL$.show', [$$MODEL_NAME_CAMEL$->id]) !!}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+                   {{--                  <a href="{!! route('admin.$MODEL_NAME_PLURAL_CAMEL$.delete', [$$MODEL_NAME_CAMEL$->id]) !!}" onclick="return confirm('Are you sure wants to delete this $MODEL_NAME$?')"><i class="glyphicon glyphicon-remove"></i></a> --}}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- end: RESPONSIVE TABLE PANEL -->
+    </div>
+</div>
+<!-- end: PAGE CONTENT-->
