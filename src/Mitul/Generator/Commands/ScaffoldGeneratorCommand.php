@@ -18,7 +18,8 @@ class ScaffoldGeneratorCommand extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'mitul.generator:scaffold';
+    // protected $name = 'mitul.generator:scaffold'; rename to keep separate
+    protected $name = 'phillips:scaffold';
 
     /**
      * The console command description.
