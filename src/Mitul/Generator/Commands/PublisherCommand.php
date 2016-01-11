@@ -1,43 +1,62 @@
 <?php
 
-namespace Mitul\Generator\Commands;
+    namespace Mitul\Generator\Commands;
 
-use Config;
-use File;
-use Illuminate\Console\Command;
-use Mitul\Generator\CommandData;
-use Mitul\Generator\File\FileHelper;
-use Mitul\Generator\TemplatesHelper;
-use Mitul\Generator\Utils\GeneratorUtils;
-use Symfony\Component\Console\Input\InputOption;
+    use Config;
+    use File;
+    use Illuminate\Console\Command;
+    use Mitul\Generator\CommandData;
+    use Mitul\Generator\File\FileHelper;
+    use Mitul\Generator\TemplatesHelper;
+    use Mitul\Generator\Utils\GeneratorUtils;
+    use Symfony\Component\Console\Input\InputOption;
 
 class PublisherCommand extends Command
 {
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
-    protected $name = 'mitul.generator:publish';
+    private $commandData;
+
+
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Publishes a various things of generator.';
+         * The console command name.
+         *
+         * @var string
+         */
+
+    // protected $name = 'mitul.generator:publish'; renamed to keep track of
 
     /**
-     * Execute the command.
-     *
-     * @return void
+     * new command for new output
+     * @var string
+     * @author  phillip madsen
      */
+
+    protected $name = 'phillip:publishstartfiles';
+
+    /**
+         * The console command description.
+         *
+         * @var string
+         */
+    protected $description = 'Publishes a various things of generator. use --templates --baseController --all to add others';
+
+    /**
+         * Execute the command.
+         *
+         * @return void
+         */
     public function handle()
     {
         if ($this->option('all')) {
             $this->publishCommonViews();
             $this->publishAPIRoutes();
             $this->initAPIRoutes();
+            $this->publishAdminRoutes(); // newly added
+            $this->publishDashboardController(); // newly added
+            $this->publishDashboardView(); // newly added
+            $this->initAdminRoutes(); // newly added
+            $this->publishLiveRoutes(); // newly added
+            $this->initLiveRoutes(); // newly added
             $this->publishTemplates();
             $this->publishAppBaseController();
         } elseif ($this->option('templates')) {
@@ -48,6 +67,13 @@ class PublisherCommand extends Command
             $this->publishCommonViews();
             $this->publishAPIRoutes();
             $this->initAPIRoutes();
+            $this->publishLiveRoutes(); // newly added
+            $this->initLiveRoutes(); // newly added
+            $this->publishAdminRoutes(); // newly added
+            $this->initAdminRoutes(); // newly added
+            $this->publishDashboardController(); // newly added
+            $this->publishDashboardView(); // newly added
+
         }
     }
 
@@ -163,6 +189,102 @@ class PublisherCommand extends Command
 
         $this->comment($dirName.' published');
         $this->info($destinationDir);
+    }
+
+
+
+
+
+
+
+   /**
+         * Publishes admin dashboard blade template file.
+         */
+    public function publishDashboardView()
+    {
+
+        $adminControllersPath = __DIR__.'/../../../../templates/scaffold/views/dashboard.blade.stub';
+
+        $dashPath = Config::get('generator.path_dashboard_view', base_path('resources/views/admin/dashboard.blade.php'));
+
+        $this->publishFile($adminControllersPath, $dashPath, 'dashboard.blade.php');
+    }
+
+    /**
+         * Publishes admin dashboard controller.
+         */
+    public function publishDashboardController()
+    {
+
+        $adminControllersPath = __DIR__.'/../../../../templates/controller/DashboardController.stub';
+        $adminControllersPath = __DIR__.'/../../../../templates/scaffold/views/dashboard.blade.stub';
+
+        $dashPath = Config::get('generator.path_dashboard_controller', app_path('Http/Controllers/Admin/DashboardController.php'));
+
+        $this->publishFile($adminControllersPath, $dashPath, 'DashboardController.php');
+    }
+
+    /**
+         * Publishes admin_routes.php.
+         */
+    public function publishAdminRoutes()
+    {
+        $routesPath = __DIR__.'/../../../../templates/routes/admin_routes.stub';
+
+        $adminRoutesPath = Config::get('generator.path_admin_routes', app_path('Http/admin_routes.php'));
+
+        $this->publishFile($routesPath, $adminRoutesPath, 'admin_routes.php');
+    }
+
+    /**
+         * Publishes live_routes.php.
+         */
+
+    public function publishLiveRoutes()
+    {
+        $routesPath = __DIR__.'/../../../../templates/routes/live_routes.stub';
+
+        $liveRoutesPath = Config::get('generator.path_live_routes', app_path('Http/live_routes.php'));
+
+        $this->publishFile($routesPath, $liveRoutesPath, 'live_routes.php');
+    }
+
+	/**
+     * @author phillip madsen
+     *         newly added live routes file
+     */
+    private function initLiveRoutes()
+    {
+        $path = Config::get('generator.path_routes', app_path('Http/routes.php'));
+        $fileHelper = new FileHelper();
+        $routeContents = $fileHelper->getFileContents($path);
+
+         $template = 'live_routes_group';
+
+        $templateHelper = new TemplatesHelper();
+        $templateData = $templateHelper->getTemplate($template, 'routes');
+        $templateData = $this->fillTemplate($templateData);
+        $fileHelper->writeFile($path, $routeContents."\n\n".$templateData);
+        $this->comment("\n LIVE group added to routes.php");
+    }
+
+    /**
+     * @author phillip madsen
+     *         newly added admin routes file
+     */
+    private function initAdminRoutes()
+    {
+        $path = Config::get('generator.path_routes', app_path('Http/routes.php'));
+        $fileHelper = new FileHelper();
+        $routeContents = $fileHelper->getFileContents($path);
+
+        $template = 'admin_routes_group';
+
+        $templateHelper = new TemplatesHelper();
+        $templateData = $templateHelper->getTemplate($template, 'routes');
+        $templateData = $this->fillTemplate($templateData);
+        $fileHelper->writeFile($path, $routeContents."\n\n".$templateData);
+        $this->comment("\n ADMIN group added to routes.php");
     }
 
     /**
