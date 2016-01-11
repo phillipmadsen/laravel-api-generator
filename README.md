@@ -1,3 +1,35 @@
+Laravel API/Scaffold/CRUD Generator with new options as follows (under development)
+
+*I have added to the generator and at the moment it creates the following items and I have included custom admin templating and Caffeinated\Menus*
+
+##CREATES
+Admin = DashboardController.php
+  * AdminMenu.php
+  * admin_routes.php
+  * live_routes.php
+  * live_routes_group.stub
+  * admin_routes_group.stub
+    * views/admin {model}Controller.php
+    * views/admin/{model}Repository.php
+    * views/admin/{model}/UpdateRequest.php
+    * views/admin/{model}/CreateRequest.php
+    * ADMIN VIEWS
+    * dashboard.blade.php
+    * (each model)views/admin/{model}.php
+    	* index
+    	* create
+    	* edit
+    	* show
+    	* fields
+    	* field
+    	* show_field
+    	* datatable 
+  * views/{model}/live.blade.php
+  * views/{model}/index.blade.php
+  * views/{model}/show.blade.php
+
+(This is a work in progress based off the awesome Mitulgolakiya/laravel-api-generator)
+
 Laravel API/Scaffold/CRUD Generator
 =======================
 [![Latest Stable Version](https://poser.pugx.org/mitulgolakiya/laravel-api-generator/v/stable)](https://packagist.org/packages/mitulgolakiya/laravel-api-generator) [![Total Downloads](https://poser.pugx.org/mitulgolakiya/laravel-api-generator/downloads)](https://packagist.org/packages/mitulgolakiya/laravel-api-generator) [![Monthly Downloads](https://poser.pugx.org/mitulgolakiya/laravel-api-generator/d/monthly)](https://packagist.org/packages/mitulgolakiya/laravel-api-generator) [![Daily Downloads](https://poser.pugx.org/mitulgolakiya/laravel-api-generator/d/daily)](https://packagist.org/packages/mitulgolakiya/laravel-api-generator) [![Latest Unstable Version](https://poser.pugx.org/mitulgolakiya/laravel-api-generator/v/unstable)](https://packagist.org/packages/mitulgolakiya/laravel-api-generator) [![License](https://poser.pugx.org/mitulgolakiya/laravel-api-generator/license)](https://packagist.org/packages/mitulgolakiya/laravel-api-generator)
